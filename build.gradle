@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'jacoco'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.0'
+}
+
+mainClassName = 'transformer.TransformerTest'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor 'org.apache.logging.log4j:log4j-core:2.14.1'
+    implementation      'org.apache.logging.log4j:log4j-core:2.14.1'
+    implementation      'org.apache.logging.log4j:log4j-api:2.14.1'
+    testImplementation  'junit:junit:4.13'
+}
+
+shadowJar {
+    transform(com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer)
+
+    manifest {
+        attributes (
+            'Multi-Release': 'true'
+        )
+    }
+}
